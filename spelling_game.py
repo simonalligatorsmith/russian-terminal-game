@@ -12,51 +12,62 @@ Next:
     get big wordlist from frequency list
     
 """
+import os
+# clear screen
+os.system('cls')
 
 with open("словарь.txt", encoding='utf_8') as word_file:
     word_list = [w.strip() for w in word_file.readlines()]
     
+    
+input("Welcome to the spelling game! Type the words as their letters disappear. Enter the word 'help' if you need help.\n**press ENTER to continue*")
+    
 for word in word_list:
+    """
+    Notes for even, odd word '_' transformer where N is step number, L is length of word, W is word. This algorithm replaces the letters with '_' from the inside out.
+
+        Perform each algorithm till N = L/2 + L%2
+        
+        EVEN: W = W[0:(L/2)-N] + '_'*2*N + W[(L/2)+N:]
+        ODD:  W = W[0:int(L/2)+1+N] + '_'*((2*N)-1) + W[int(L/2)+N:]
+        
+        BOTH: W = W[0:int(L/2)+(L%2)+N] + '_'*((2*N)-(L%2)) + W[int(L/2)+N:]
+    """
 
     word_len = len(word) # L
     edited_word = word   # W
-    cycles   = 0         # N
+    cycles   = 1         # N
     odd_factor = word_len % 2 # will be 1 if word_len is odd, or 0 if word_len is even
     
-    print(edited_word)
+    print(f"The word is {edited_word}")
     
     while cycles < (word_len / 2) + (odd_factor):
-        print(f"DEBUG: cycle is {cycles}.")
-        edited_word = edited_word[0 : int(word_len/2) + (odd_factor) - cycles] + '_'*((2*cycles) - (odd_factor)) + edited_word[ int(word_len/2) + cycles : ]
+        edited_word = edited_word[0 : int(word_len/2) + odd_factor - cycles] + '_'*((2*cycles) - (odd_factor)) + edited_word[ int(word_len/2) + cycles: ]
         cycles += 1
-        print(edited_word)
         
-        
-
-
-
-
-    # print word to screen once with no edits
-    while True:
-        typed_guess = input(f"Type the word \"{word}\"\n")
-        # take user input; if match word, move on. else, go to previous step
-        if typed_guess == word:
-            print("Хорошо!")
-            break
-        
-        else: #
-            print("Not quite.")
+        # print word to screen once with no edits
+        while True:
+            typed_guess = input(f"Type the word \"{edited_word}\"\n")
+            # take user input; if match word, move on. else, go to previous step
+            if typed_guess == word:
+                input("Хорошо! *Enter* to continue\n")
+                # clear screen
+                os.system('cls')
+                break
+                
+            elif typed_guess == 'help':
+                # reset the word
+                input("No worries, let's take it from the top.")
+                edited_word = word
+                cycles = 1
             
-"""
-Notes for even, odd word '_' transformer where N is step number, L is length of word, W is word. This algorithm replaces the letters with '_' from the inside out.
+            else: #
+                input("Not quite. *Enter* to continue\n")
+                # clear screen
+                os.system('cls')
+            
+    print("Nice work!")
 
-    Perform each algorithm till N = L/2 + L%2
-    
-    EVEN: W = W[0:(L/2)-N] + '_'*2*N + W[(L/2)+N:]
-    ODD:  W = W[0:int(L/2)+1+N] + '_'*((2*N)-1) + W[int(L/2)+N:]
-    
-    BOTH: W = W[0:int(L/2)+(L%2)+N] + '_'*((2*N)-(L%2)) + W[int(L/2)+N:]
-"""
         
 
         
