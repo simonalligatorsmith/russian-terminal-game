@@ -36,15 +36,30 @@ for word in word_list:
 
     word_len = len(word) # L
     edited_word = word   # W
-    cycles   = 1         # N
+    cycles   = 0         # N
     odd_factor = word_len % 2 # will be 1 if word_len is odd, or 0 if word_len is even
     
-    print(f"The word is {edited_word}")
+    #print(f"The word is {edited_word}\nodd_factor is {odd_factor}\nint(word_len / 2) is {int(word_len/2)}")
     
-    while cycles < (word_len / 2) + (odd_factor):
-        edited_word = edited_word[0 : int(word_len/2) + odd_factor - cycles] + '_'*((2*cycles) - (odd_factor)) + edited_word[ int(word_len/2) + cycles: ]
-        cycles += 1
+    while cycles < (word_len / 2):
+        #print(f"cycles is {cycles}\nformula for edited_word pt_2 is {int(word_len/2) + cycles  + odd_factor}")
+        """
+        This blasphemy of a list comprehension slowly replaces the middle character(s) with underscores.
+        It does this by splitting the word into the right slice, underscore portion, and left slice.
+        The slices work like so:
         
+        Right slice:
+            take characters from start of word until index halfway through the word + the odd_factor for odd numbers, minus number of cycles.
+        Underscore portion:
+            write a number of underscores equal to twice the number of underscores, minus the odd_factor
+        Left slice:
+            take characters from index @ halfway through the word, plus the number of cycles, minus the ugly term that says "add the odd_factor if this is the first cycle, otherwise do nothing.
+        """
+        edited_word = edited_word[0 : int(word_len/2) + odd_factor - cycles] + '_'*((2*cycles) - odd_factor) + edited_word[ int(word_len/2) + cycles  + int(not cycles)*odd_factor : ]
+        cycles += 1
+        #print(edited_word)
+        
+
         # print word to screen once with no edits
         while True:
             typed_guess = input(f"Type the word \"{edited_word}\"\n")
