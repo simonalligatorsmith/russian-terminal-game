@@ -12,12 +12,15 @@ Next:
     get big wordlist from frequency list
     
 """
-import os
+from os import system
+from random import shuffle
 # clear screen
-os.system('cls')
+system('cls')
 
 with open("словарь.txt", encoding='utf_8') as word_file:
     word_list = [w.strip() for w in word_file.readlines()]
+    # shuffle wordlist so you practice something different each time
+    shuffle(word_list)
     
     
 input("Welcome to the spelling game! Type the words as their letters disappear. Enter the word 'help' if you need help.\n**press ENTER to continue*")
