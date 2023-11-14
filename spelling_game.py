@@ -23,7 +23,8 @@ with open("словарь.txt", encoding='utf_8') as word_file:
     shuffle(word_list)
     
     
-input("Welcome to the spelling game! Type the words as their letters disappear. Enter the word 'help' if you need help.\n**press ENTER to continue*")
+input("Welcome to the spelling game! Type the words as their letters disappear.\n" +
+      "Enter 'help' if you need help, 'skip' to skip a word. Press ENTER to start the game.\n")
     
 for word in word_list:
     """
@@ -70,21 +71,29 @@ for word in word_list:
             if typed_guess == word:
                 input("Хорошо! *Enter* to continue\n")
                 # clear screen
-                os.system('cls')
+                system('cls')
                 break
                 
             elif typed_guess == 'help':
                 # reset the word
                 input("No worries, let's take it from the top.")
+                system('cls')
                 edited_word = word
                 cycles = 1
+                
+            elif typed_guess == 'skip':
+                # skip to next word
+                input("Skipping to next word - *Enter*")
+                system('cls')
+                cycles = word_len/2
+                break
             
             else: #
                 input("Not quite. *Enter* to continue\n")
                 # clear screen
-                os.system('cls')
+                system('cls')
             
-    print("Nice work!")
+    
 
         
 
